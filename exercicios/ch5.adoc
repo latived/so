@@ -1,0 +1,105 @@
+= Lista 3: Gerência de memória
+:author: Warley Vital
+
+.5) Seria possível e/ou viável implementar as conversões de endereços realizadas pela MMU em software, ao invés de usar um hardware dedicado? Por quê?
+
+Nos esquemas de alocação mais simples, como **partições fixas**, sim, no entanto, 
+ao passo que a complexidade da MMU aumenta, como na **alocação segmentada paginada**, 
+torna-se inviável implementar.
+
+Na estratégia de _partições fixas_, a MMU é apenas um registrador com um valor pré-determinado na
+troca de contexto. Poderia facilmente ser trocado por uma constante associada ao processo.
+
+Por outro lado, na _alocação paginada_, o uso de tabelas multi-níveis tornaria o software muito
+mais complexo, dado a nova necessidade de gerenciar as tabelas de cada nível para o processo corrente.
+
+.10) Analise as seguintes afirmações relativas às técnicas de alocação de memória:
+
+* I) Na alocação em partições fixas, a MMU é composta basicamente de um registrador e um somador.
+* II) Na alocação contígua, a área de memória acessível a cada processo é definida por um
+registrador _base_ e um registrador _limite_.
+* III) A técnica de alocação contígua é imune a problemas de fragmentação externa.
+* IV) A alocação por segmentos resolve o problema da fragmentação externa.
+* V) Na alocação por segmentos, cada endereço de memória é composto de duas partes: _segmento_ e
+_deslocamento_.
+* VI) A alocação por páginas resolve o problema da fragmentação externa.
+
+[red]#_Justifique as afirmações julgadas erradas._#
+
+I está correta.
+
+II está correta.
+
+III está errada porque as partições ficam livres em diferentes partes da memória física. Isto
+é, de modo não contíguo. Como as partições são de tamanhos variados, poderá ocorrer partições livres 
+entre partições ocupadas com espaço menor que o desejado para um processo _p_ em dado momento.
+
+IV está errada porque sofre o mesmo problema da alocação contígua, isto é, de espaços não
+contíguos de memória livre. A diferença é que em vez de trabalhar com partições, trabalhamos com
+segmentos--em suma, blocos de tamanhos variável.
+
+V está correta.
+
+VI está correta. _Blocos de tamanho fixo (quadros e páginas)._
+
+**Portanto**, a resposta correta para essa questão é a **(b) I, II, V e VI**.
+
+.15) Explique o que é TLB, qual sua finalidade e como é seu funcionamento.
+
+O TLB, ou _Translation Lookaside Buffer_, **é** um cache em hardware que **armazena** os endereços físicos de memória a
+partir dos endereços lógicos recebidos, **sem a necessidade de tradução** por parte da MMU.
+
+Seu **funcionamento** é como uma tabela, que armazena pares [_página, quadro_] obtidos em consultas
+recentes às tabelas de páginas do processo ativo. É uma tabela de _hash_: página **p** => quadro **q** (ou _cache miss_).
+
+.20) Em que consistem as estratégias de alocação _first-fit_, _best-fit_, _worst-fit_ e _next-fit_?
+
+São critérios que buscam minimizar a ocorrência da fragmentação externa, ao definir que áreas livres
+são alocadas a novos processos.
+
+**First-fit**, ou primeiro encaixe, define que a área alocada é a primeira encontrada. Uma
+estratégia rápida.
+
+**Best-fit**, ou melhor encaixe, escolhe aquela com menor área possível.
+Uma estratégia que gera resíduos (áreas livres) muito pequenos e logo inúteis.
+
+**Worst-fit**, ou pior encaixa, esolhe aquela com maior área possível.
+Gera resíduos grandes, com mais chances de serem usados.
+
+**Next-fit**, ou próximo encaixe, é uma estratégia variante da (1), que percorre a lista
+a partir da última área livre alocada/liberada. Isso permite que as áreas alocadas se concentrem
+em um espaço homogêneo.
+
+.25) O que é uma falta de página? Quais são suas causas possíveis e como o sistema operacional deve tratá-las?
+
+É uma **interrupção** gerada pela MMU. 
+
+Ocorre nos casos em que uma página solicitada não esteja disponível, seja por não estar mapeada em
+um quadro da memória física ou por ter alguma proteção específica naquele momento, como
+_copy-on-write_--mecanismo de proteção contra escrita no compartilhamento de memória.
+
+O sistema operacional deve verificar se a página solicitida não existe ou se foi previamente
+transferida para o disco. Caso a página não exista, o processo que solicitou a página deve ser abortado. 
+Por outro lado, o processo deve ser suspenso enquanto o sistema transfera a página de volta para memória 
+RAM e faz os ajustes necessários na tabela de páginas.
+
+.30) Um computador tem 8 quadros de memória física; os parâmetros usados pelo mecanismo de memória virtual são indicados na tabela a seguir. Qual será a próxima página a ser substituída, considerando os algoritmos LRU, FICO, segunda chance e NRU? 
+
+**Indique seu raciocínio.**
+
+.Tabela com os parâmetros usados pelo mecanismo de memória virtual
+image::ex530.png[Tabela]
+
+_Ler 5.7.3._
+
+.35) Construa um simulador de algoritmos de alocação de memória contígua. 
+
+**O simulador deve...**
+
+* produzir aleatoriamente uma sequência de blocos de memória de tamanhos diferentes,
+* simular sua alocação e gerar como saída o número de fragmentos livre de memória,
+* os tamanhos do menor e do maior fragmentos,
+* e o tamanho médio dos fragmentos.
+
+**Devem ser comparadas as estratégias de alocação _first-fit_, _next-fit_, _best-fit_, e
+_worst-fit_.**

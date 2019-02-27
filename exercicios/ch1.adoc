@@ -1,0 +1,43 @@
+= Conceitos básicos
+
+.1) Quais os dois principais objetivos dos sistemas operacionais?
+
+**Gerência e abstração de recursos.** O sistema operacional deve ser capaz de alocar os recursos para as mais diversas aplicações,
+e prover interfaces de acesso a estes recursos que sejam **mais simples** de usar do que as de baixo nível, **independente** da tecnologia do HW.
+
+.2) Por que a abstração de recursos é importante para os desenvolvedores de aplicações? Ela tem utilidade para os desenvolvedores do próprio sistema operacional?
+
+É importante por causa da **dificuldade em lidar com os muitos detalhes e tipos diferentes** de tecnologias de hardware. Com abstração pode-se prover interfaces mais **simples e independentes** do baixo nível.
+Entendendo o próprio sistema operacional como um conjunto de programas utilitários, é de se imaginar que seja útil para o desenvolvimento desses programas a abstração dos recursos.
+Com uma interface simples no uso do HW, a própria manutenção e uso do SO se torna mais fácil.
+
+.3) A gerência de atividades permite compartilhar o processador, executando mais de uma aplicação ao mesmo tempo. Identifique as principais vantagens trazidas por essa funcionalidade e os desafios a resolver para implementá-la.
+
+As vantagens são no quesito de **eficiência e usabilidade**, dado que mais tarefas executadas ao mesmo tempo provê ao usuário mais opções de uso no sistema operacional, como por exemplo navegar na web enquanto escuta música.
+Os desafios consistem em **como realizar** esse compartilhamento: há prioridades entre as aplicações? como selecionar qual executar? por quanto tempo cada uma deve ficar? 
+Deve-se responder tais questões **respeitando a natureza das aplicações** sendo executadas; isto é, não se pode negligenciar em demasia aplicações de música, dado que longas demoras tornam a experiência ruim.
+
+.4) O que caracteriza um sistema operacional de tempo real? Quais as duas classificações de sistemas operacionais de tempo real e suas diferenças?
+
+Sistemas de tempo real são projetados para obedecer tempos de respostas previsíveis, isto é, **a sua estrutura interna deve ser construída de forma a minimizar esperas e latências imprevisíveis**.
+Podem ser do tipo _soft real-time systems_, onde a falha não tem implicações graves **(embora o serviço prestado seja degradado)**, como um reprodutor de música; e do tipo _hard real-time systems_, onde a falha resulta em implicações ecônomicas, humanas e ambientais
+gravíssimas **(pertubação do objeto controlado)**, como no caso de sistemas de controles de usinas ou de aviões.
+
+.5) O que diferencia o _núcleo_ do restante do sistema operacional?
+
+É no núcleo que ocorre o acesso ao baixo nível, ao hardware, por meio dos drivers dos dispositivos. Todo esse acesso é abstraído aos aplicativos e programas utilitários, que assim têm a sua disposição interfaces mais 
+simples de usar e independentes dos detalhes de baixo nível.
+
+.6) Seria possível construir um sistema operacional seguro usando um processador que não tenha níveis de privilégio? Por quê?
+
+Sem níveis de privilégio qualquer programa malicioso tem meios para influenciar nos dados de outros programas, modificando-os ou influenciando-os para ações prejudiciais.
+
+.7) O processador Pentium possui dois bits para definir o nível de privilégio, resultando em 4 níveis distintos. A maioria dos sistemas operacionais para esse processador usa somente os níveis extermos (0 e 3, ou 00~2~ e 11~2~). Haveria alguma utilidade para os níveis intermediários?
+
+Obviamente não haveria.
+
+.8) Quais as diferenças entre as _interrupções_, _execeções_ e _traps_?
+
+Interrupções são causadas por eventos externos ao processador, como uma mensagem chegando pela placa de rede.
+Exceções são causadas por eventos internos, como divisão por zero ou movimento do mouse.
+Já _traps_ (ou interrupções por software) são invocadas quando se deseja fazer alguma chamada ao sistema (para acessar recursos de algum tipo).
