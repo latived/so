@@ -10,6 +10,7 @@ This simulator should compare the allocation strategies first-fit, next-fit, bes
 """
 
 import random
+import strategy as stt
 
 class Simulator:
 
@@ -17,6 +18,7 @@ class Simulator:
         self.strategy = strategy
         self.mem_size = mem_size
         self.blocks = []
+        self.processes = []
 
     def build_blocks(self, min_block=0.1, max_block=1.0):
         # `min_block` is the min. size of a block given by `min_block/100 * mem_size`
@@ -29,7 +31,7 @@ class Simulator:
         # with its size as the differente between those (don't care its size).
 
         if len(self.blocks):
-            print("Non-empty memory. Try clearing with `clear_blocks` first.")
+            print("Non-empty memory. Try clearing it with `clear_blocks` first.")
             return 
 
         sum_blocks = 0
@@ -53,4 +55,28 @@ class Simulator:
 
     def get_blocks(self):
         return self.blocks
+
+    def build_processes(self, min_proc=0.01, max_proc=1.1, n=100):
+        # `min_proc` and `max_proc` define the min and max size that a process
+        # could have.
+
+        if len(self.processes):
+            print("Non-empty list. Try clearing it with `clear_processes` first.")
+            return 
+
+        lps = int(min_proc/100 * self.mem_size)
+        hps = int(max_proc/100 * self.mem_size)
+
+        for _ in range(n):
+            p = random.randint(lps, hps)
+            self.processes.append(p)
+
+    def clear_processes(self):
+        self.processes = []
+
+    def get_processes(self):
+        return self.processes
+
+    def allocate(self, process):
+        pass
 
