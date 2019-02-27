@@ -35,11 +35,11 @@ class Simulator:
             return 
 
         sum_blocks = 0
-        lbv = min_block/100 * self.mem_size
-        hbv = max_block/100 * self.mem_size
+        lbs = int(min_block/100 * self.mem_size)
+        hbs = int(max_block/100 * self.mem_size)
 
         while sum_blocks < self.mem_size:
-            b = random.randint(lbv, hbv)
+            b = random.randint(lbs, hbs)
             sum_blocks += b
             self.blocks.append(b)
 
