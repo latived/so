@@ -22,3 +22,7 @@ It would be nice to
 * add monte carlo simulation
 * add support to modify params 
 * other things...
+
+## Usage
+
+Just run `python main.py`.
