@@ -11,17 +11,21 @@ def main():
     blocks = s.get_blocks()
     procs = s.get_processes()
 
+    allocation_result = []
+    true_allocations = 0
 
     for p in procs:
-        s.allocate(p)
+        ret = s.allocate(p)
+        allocation_result.append((p, ret))
+        if ret: 
+            true_allocations += 1
 
-    #print(s.map_proc_to_block)
-
-    print('{} blocks\n{} processes'.format(len(blocks), len(procs)))
 
     frags_info = s.generate_fragments_info()
     print('SUMMARY')
-    print('{} free fragments\n{} lowest\n{} highest\n{} mean size'.
+    print('{} blocks\n{} processes'.format(len(blocks), len(procs)))
+    print('{} processes alocated'.format(true_allocations))
+    print('{} free fragments\n{} lowest\n{} highest\n{:.2f} mean size'.
             format(frags_info[0],
                    frags_info[1],
                    frags_info[2],

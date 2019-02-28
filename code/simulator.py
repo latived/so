@@ -98,16 +98,19 @@ class Simulator:
                     self.map_proc_to_block)
         else:
             print('This strategy doesn\'t exists.')
-            return
+            return False
 
         if pos != -1:
             p_id = process[0]
             self.map_proc_to_block[pos] = (p_id, fg_sz)
             if verbose:
                 print("Allocation done at block {} (internal fragmentation {})".format(pos, fg_sz))
+            return True
         else:
             if verbose:
                 print("Allocation not done. Some reason... Bad luck, maybe?")
+            return False
+
 
     def generate_fragments_info(self):
 
