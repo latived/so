@@ -14,12 +14,15 @@ import strategy as stt
 
 class Simulator:
 
-    def __init__(self, strategy=None, mem_size=10000):
+
+    def __init__(self, strategy=None, mem_size=10000, seed=42):
         self.strategy = strategy
         self.mem_size = mem_size
         self.blocks = []
         self.processes = []
         self.map_proc_to_block = {}
+
+        random.seed(seed)
 
     def build_blocks(self, min_block=0.1, max_block=1.0):
         # `min_block` is the min. size of a block given by `min_block/100 * mem_size`

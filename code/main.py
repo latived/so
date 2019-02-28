@@ -1,9 +1,8 @@
 
 from simulator import Simulator
 
-
-def main():
-    s = Simulator(strategy='first_fit')
+def run(strategy=None):
+    s = Simulator(strategy=strategy)
 
     s.build_blocks()
     s.build_processes()
@@ -20,9 +19,9 @@ def main():
         if ret: 
             true_allocations += 1
 
-
     frags_info = s.generate_fragments_info()
-    print('SUMMARY')
+
+    print('SUMMARY for {} strategy'.format(strategy))
     print('{} blocks\n{} processes'.format(len(blocks), len(procs)))
     print('{} processes alocated'.format(true_allocations))
     print('{} free fragments\n{} lowest\n{} highest\n{:.2f} mean size'.
@@ -30,6 +29,13 @@ def main():
                    frags_info[1],
                    frags_info[2],
                    frags_info[3]))
+
+
+
+def main():
+    run('first_fit')
+    print(20*'-')
+    run('best_fit')
 
 
 main()
