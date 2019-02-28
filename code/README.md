@@ -14,3 +14,11 @@ This simulator should alose compare the allocation strategies
 - [ ] next-fit,
 - [x] best-fit 
 - [x] and worst-fit.
+
+## Missing (didn't have the time to that)
+
+It would be nice to 
+
+* add monte carlo simulation
+* add support to modify params 
+* other things...
