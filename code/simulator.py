@@ -78,7 +78,7 @@ class Simulator:
     def get_processes(self):
         return self.processes
 
-    def allocate(self, process):
+    def allocate(self, process, verbose=False):
         # process is a number that indicates its size
         # each allocation returns 
         #   the process position in memmory if the allocation wasn't sucessful, it will return -1
@@ -103,9 +103,11 @@ class Simulator:
         if pos != -1:
             p_id = process[0]
             self.map_proc_to_block[pos] = (p_id, fg_sz)
-            print("Allocation done at block {} (internal fragmentation {})".format(pos, fg_sz))
+            if verbose:
+                print("Allocation done at block {} (internal fragmentation {})".format(pos, fg_sz))
         else:
-            print("Allocation not done. Some reason... Bad luck, maybe?")
+            if verbose:
+                print("Allocation not done. Some reason... Bad luck, maybe?")
 
     def generate_fragments_info(self):
 
@@ -113,7 +115,7 @@ class Simulator:
 
         for i in range(len(self.blocks)):
             if i not in self.map_proc_to_block.keys():
-                free_fragments.append(i)
+                free_fragments.append(self.blocks[i])
 
         n_ff = len(free_fragments)
         min_ff = min(free_fragments)

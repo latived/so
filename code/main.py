@@ -15,7 +15,7 @@ def main():
     for p in procs:
         s.allocate(p)
 
-    print(s.map_proc_to_block)
+    #print(s.map_proc_to_block)
 
     print('{} blocks\n{} processes'.format(len(blocks), len(procs)))
 
