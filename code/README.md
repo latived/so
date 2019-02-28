@@ -1,7 +1,8 @@
 # Allocation Strategies Simulator
 
 This simulator should contain the following capabilities...
-- [ ] to produce random sequences of memmory blocks with different sizes,
+
+- [x] to produce random sequences of memmory blocks with different sizes,
 - [ ] to simulate blocks allocation 
 - [ ] and generate the number of free fragments as output, 
 -- [ ] its lowest and highest fragments size 
