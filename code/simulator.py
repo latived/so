@@ -107,3 +107,21 @@ class Simulator:
         else:
             print("Allocation not done. Some reason... Bad luck, maybe?")
 
+    def generate_fragments_info(self):
+
+        free_fragments = []
+
+        for i in range(len(self.blocks)):
+            if i not in self.map_proc_to_block.keys():
+                free_fragments.append(i)
+
+        n_ff = len(free_fragments)
+        min_ff = min(free_fragments)
+        max_ff = max(free_fragments)
+        mean_ff = float(sum(free_fragments))/n_ff
+
+        return n_ff, min_ff, max_ff, mean_ff
+
+
+
+
