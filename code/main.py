@@ -31,11 +31,12 @@ def run(strategy=None):
                    frags_info[3]))
 
 
-
 def main():
     run('first_fit')
     print(20*'-')
     run('best_fit')
+    print(20*'-')
+    run('worst_fit')
 
 
 main()

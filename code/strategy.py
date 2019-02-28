@@ -18,7 +18,7 @@ def next_fit(process, blocks, mapping):
 
 def best_fit(process, blocks, mapping):
     # iterate throught blocks searching by the first block
-    # with the minimum size which is less or equal the process size
+    # with the minimum size which is greater than or equal the process size
 
     p_sz = process[1]
 
@@ -37,5 +37,20 @@ def best_fit(process, blocks, mapping):
 
 
 def worst_fit(process, blocks, mapping):
-    pass
+    # iterate throught blocks searching by the first block
+    # with the maximum size which is greater than or equal the process size
 
+    p_sz = process[1]
+
+    # find first min block sz >= p_sz
+    pos = -1
+    fg_sz = -1
+    worst = 0
+    for i in range(len(blocks)):
+        if p_sz <= blocks[i] and i not in mapping.keys():
+            if worst < blocks[i]:
+                best = blocks[i]
+                pos = i
+                fg_sz = best - p_sz
+
+    return pos, fg_sz
