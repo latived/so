@@ -19,6 +19,7 @@ class Simulator:
         self.mem_size = mem_size
         self.blocks = []
         self.processes = []
+        self.map_proc_to_block = {}
 
     def build_blocks(self, min_block=0.1, max_block=1.0):
         # `min_block` is the min. size of a block given by `min_block/100 * mem_size`
@@ -67,9 +68,9 @@ class Simulator:
         lps = int(min_proc/100 * self.mem_size)
         hps = int(max_proc/100 * self.mem_size)
 
-        for _ in range(n):
+        for i in range(n):
             p = random.randint(lps, hps)
-            self.processes.append(p)
+            self.processes.append((i, p))
 
     def clear_processes(self):
         self.processes = []
@@ -78,5 +79,31 @@ class Simulator:
         return self.processes
 
     def allocate(self, process):
-        pass
+        # process is a number that indicates its size
+        # each allocation returns 
+        #   the process position in memmory if the allocation wasn't sucessful, it will return -1
+        #   the fragment_size as block_size - process_size (internal fragmentation)
+
+        if self.strategy == 'first_fit':
+            pos, fg_sz = stt.first_fit(process, self.blocks,
+                    self.map_proc_to_block)
+        elif self.strategy == 'next_fit':
+            pos, fg_sz = stt.next_fit(process, self.blocks,
+                    self.map_proc_to_block)
+        elif self.strategy == 'best_fit':
+            pos, fg_sz = stt.best_fit(process, self.blocks,
+                    self.map_proc_to_block)
+        elif self.strategy == 'worst_fit':
+            pos, fg_sz = stt.worst_fit(process, self.blocks,
+                    self.map_proc_to_block)
+        else:
+            print('This strategy doesn\'t exists.')
+            return
+
+        if pos != -1:
+            p_id = process[0]
+            self.map_proc_to_block[pos] = (p_id, fg_sz)
+            print("Allocation done at block {} (internal fragmentation {})".format(pos, fg_sz))
+        else:
+            print("Allocation not done. Some reason... Bad luck, maybe?")
 
