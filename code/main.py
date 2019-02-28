@@ -1,8 +1,8 @@
 
 from simulator import Simulator
 
-def run(strategy=None):
-    s = Simulator(strategy=strategy)
+def run(strategy=None, mem_size=10000, min_sz=None, max_sz=None):
+    s = Simulator(strategy=strategy, mem_size=mem_size)
 
     s.build_blocks()
     s.build_processes()
@@ -32,6 +32,9 @@ def run(strategy=None):
 
 
 def main():
+    #print("Simulation for memmory={}, min_sz={}, max_sz={}".
+    #        format(mem_size, min_sz, max_sz))
+    print(20*'-')
     run('first_fit')
     print(20*'-')
     run('best_fit')
